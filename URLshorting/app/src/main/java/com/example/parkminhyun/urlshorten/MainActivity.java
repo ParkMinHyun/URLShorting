@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         propertyInit();
-
+        URLShorting u = new URLShorting();
     }
 
     private void propertyInit() {

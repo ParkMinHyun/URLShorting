@@ -1,3 +1,4 @@
+
 package com.example.parkminhyun.urlshorten;
 
 import java.util.HashMap;
@@ -15,7 +16,8 @@ public class URLShorting {
     private String shortenDomain = "http://minhyun.com/";
     private Random myRand; // 랜덤 숫자를 위한 변수
     private char shortenKey[]; // 랜덤 문자 생성을 위한 변수
-    private int keyLength = 8; // shortening 의 결과 값은 8문자
+
+    private static final int keyLength = 8; // shortening 의 결과 값은 8문자
 
     public URLShorting() {
         keyMap = new HashMap<String, String>();
@@ -30,15 +32,16 @@ public class URLShorting {
             if (i < 10)
                 j = i + 48;
 
-            // 10~35 index엔 대문자
+            // 10~35 index엔 대문자(A~Z)
             else if (i > 9 && i <= 35)
                 j = i + 55;
 
-            // 36~62 index엔 소문자
+            // 36~62 index엔 소문자(a~z)
             else
                 j = i + 61;
 
             shortenKey[i] = (char) j;
         }
     }
+
 }
