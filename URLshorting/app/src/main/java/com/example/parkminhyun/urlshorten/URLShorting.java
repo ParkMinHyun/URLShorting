@@ -18,6 +18,7 @@ public class URLShorting {
     private char shortenKey[]; // 랜덤 문자 생성을 위한 변수
 
     private static final int keyLength = 8; // shortening 의 결과 값은 8문자
+    private static final int keyDomainLength = 12;
 
     public URLShorting() {
         keyMap = new HashMap<String, String>();
@@ -53,15 +54,19 @@ public class URLShorting {
 
             // url substring 기능 ex) http://만 남도록
             String transformedURL = subStringURL(url);
+            String subString_transformedURL = transformedURL.substring(keyDomainLength,transformedURL.length());
 
             // 이미 key에 있는 url인지 확인
-            if (valueMap.containsKey(url)) {
-                shortURL = shortenDomain + "/" + valueMap.get(transformedURL);
+            if (valueMap.containsKey(transformedURL)) {
+                shortURL = "(이미 입력한 URL) " + shortenDomain + valueMap.get(transformedURL);
             }
-
+            // 이미 key에 있는 url인지 확인(redirect Url)
+            else if( keyMap.containsKey(subString_transformedURL) && !valueMap.containsKey(transformedURL)){
+                shortURL = "(Redirect Url) " + keyMap.get(subString_transformedURL);
+            }
             // 등록된 url이 없으면 새로 생성
-            else {
-                shortURL = shortenDomain + "/" + getUrlKey(transformedURL);
+            else{
+                shortURL = shortenDomain + getUrlKey(transformedURL);
             }
         }
 
