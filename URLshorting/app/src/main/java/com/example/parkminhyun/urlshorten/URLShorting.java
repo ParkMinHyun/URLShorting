@@ -83,7 +83,7 @@ public class URLShorting {
 
         if (URLUtil.isValidUrl(url))
             return true;
-        else if(!url.contains("minhyun.com") && !URLUtil.isValidUrl(url))
+        else if(!url.contains(shortenDomain) && !URLUtil.isValidUrl(url))
             return false;
 
         return true;
@@ -137,12 +137,5 @@ public class URLShorting {
             }
         }
         return key;
-    }
-
-    public String convertOriginalURL(String shortURL) {
-        String originalURL = "";
-        String key = shortURL.substring(shortenDomain.length() + 1);
-        originalURL = keyMap.get(key);
-        return originalURL;
     }
 }
