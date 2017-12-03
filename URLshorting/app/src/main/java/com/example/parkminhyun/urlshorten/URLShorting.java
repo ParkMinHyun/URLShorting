@@ -58,9 +58,10 @@ public class URLShorting {
             if (valueMap.containsKey(url)) {
                 shortURL = shortenDomain + "/" + valueMap.get(transformedURL);
             }
+
             // 등록된 url이 없으면 새로 생성
             else {
-                shortURL = shortenDomain + "/" + getKey(transformedURL);
+                shortURL = shortenDomain + "/" + getUrlKey(transformedURL);
             }
         }
 
@@ -79,6 +80,9 @@ public class URLShorting {
         if (url.substring(0, 7).equals("http://"))
             url = url.substring(7);
 
+        if (url.substring(0, 8).equals("https://"))
+            url = url.substring(8);
+
         // 마지막 '/' 포함 된 경우 삭제
         if (url.charAt(url.length() - 1) == '/')
             url = url.substring(0, url.length() - 1);
@@ -87,11 +91,11 @@ public class URLShorting {
     }
 
     // url에 대한 key 부여 Method
-    private String getKey(String url) {
+    private String getUrlKey(String url) {
         String key;
 
         // key 생성
-        key = generateKey();
+        key = createKey();
         // url shorten을 위한 hashmap에 key,url 담기
         keyMap.put(key, url);
         // redirect를 위한 hashmap에 url,key 담기
@@ -100,7 +104,7 @@ public class URLShorting {
     }
 
     // Key 생성 Method
-    private String generateKey() {
+    private String createKey() {
         String key = "";
         boolean flag = true;
 
@@ -119,4 +123,10 @@ public class URLShorting {
         return key;
     }
 
+    public String convertOriginalURL(String shortURL) {
+        String originalURL = "";
+        String key = shortURL.substring(shortenDomain.length() + 1);
+        originalURL = keyMap.get(key);
+        return originalURL;
+    }
 }
