@@ -46,10 +46,4 @@ public class MainActivity extends AppCompatActivity {
 
         log_TextView.setText(text);
     }
-
-
-//    // 이미 key에 있는 url인지 확인(redirect Url)
-//            else if (keyMap.containsKey(transformedURL)) {
-//        shortURL = "(Redirect Url) " + keyMap.get(transformedURL.substring(keyDomainLength,transformedURL.length()-1));
-//    }
 }

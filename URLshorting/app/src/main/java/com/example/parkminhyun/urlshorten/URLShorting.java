@@ -1,6 +1,8 @@
 
 package com.example.parkminhyun.urlshorten;
 
+import android.webkit.URLUtil;
+
 import java.util.HashMap;
 import java.util.Random;
 
@@ -33,11 +35,11 @@ public class URLShorting {
             if (i < 10)
                 j = i + 48;
 
-            // 10~35 index엔 대문자(A~Z)
+                // 10~35 index엔 대문자(A~Z)
             else if (i > 9 && i <= 35)
                 j = i + 55;
 
-            // 36~62 index엔 소문자(a~z)
+                // 36~62 index엔 소문자(a~z)
             else
                 j = i + 61;
 
@@ -54,27 +56,36 @@ public class URLShorting {
 
             // url substring 기능 ex) http://만 남도록
             String transformedURL = subStringURL(url);
-            String subString_transformedURL = transformedURL.substring(keyDomainLength,transformedURL.length());
+            String subString_transformedURL = transformedURL.substring(keyDomainLength, transformedURL.length());
 
             // 이미 key에 있는 url인지 확인
             if (valueMap.containsKey(transformedURL)) {
                 shortURL = "(이미 입력한 URL) " + shortenDomain + valueMap.get(transformedURL);
             }
             // 이미 key에 있는 url인지 확인(redirect Url)
-            else if( keyMap.containsKey(subString_transformedURL) && !valueMap.containsKey(transformedURL)){
+            else if (keyMap.containsKey(subString_transformedURL) && !valueMap.containsKey(transformedURL)) {
                 shortURL = "(Redirect Url) " + keyMap.get(subString_transformedURL);
             }
             // 등록된 url이 없으면 새로 생성
-            else{
+            else {
                 shortURL = shortenDomain + getUrlKey(transformedURL);
             }
         }
 
+        if(shortURL == "")
+            shortURL = "잘못된 형식의 URL 입니다.";
+
         return shortURL;
     }
 
-    // URL 예외처리 검사 기능 Method - 아직 미구현
+    // URL 예외처리 검사 기능 Method
     public boolean validateURL(String url) {
+
+        if (URLUtil.isValidUrl(url))
+            return true;
+        else if(!url.contains("minhyun.com") && !URLUtil.isValidUrl(url))
+            return false;
+
         return true;
     }
 
