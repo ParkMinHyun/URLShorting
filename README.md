@@ -31,7 +31,38 @@ public URLShorting() {
         }
     }
 `````````````````
+````````````````
+    // URL Sorting Method
+    public String shortenURL(String url) {
+        String shortURL = "";
 
+        // url 유효 검사
+        if (validateURL(url)) {
+
+            // url substring 기능 ex) http://만 남도록
+            String transformedURL = subStringURL(url);
+            String subString_transformedURL = transformedURL.substring(keyDomainLength, transformedURL.length());
+
+            // 이미 key에 있는 url인지 확인
+            if (valueMap.containsKey(transformedURL)) {
+                shortURL = "(이미 입력한 URL) " + shortenDomain + valueMap.get(transformedURL);
+            }
+            // 이미 key에 있는 url인지 확인(redirect Url)
+            else if (keyMap.containsKey(subString_transformedURL) && !valueMap.containsKey(transformedURL)) {
+                shortURL = "(Redirect Url) " + keyMap.get(subString_transformedURL);
+            }
+            // 등록된 url이 없으면 새로 생성
+            else {
+                shortURL = shortenDomain + getUrlKey(transformedURL);
+            }
+        }
+
+        if(shortURL == "")
+            shortURL = "잘못된 형식의 URL 입니다.";
+
+        return shortURL;
+    }
+````````````````
 
 `````````````
 // Key 생성 Method
